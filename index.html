@@ -1,1 +1,70 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>narcrng</title><link rel="stylesheet" href="style.css"></head><body><main><h1>narcrng</h1><p>Turn an MP3 into a tiny shareable waveform URL. The MP3 stays in your browser.</p><section><h2>Generate</h2><input id="file" type="file" accept="audio/*"><label>Bars <input id="bars" type="range" min="60" max="960" value="480"><output id="bo">480</output></label><label>Bits <select id="bits"><option>3</option><option>4</option><option selected>5</option><option>6</option></select></label><input id="title" maxlength="120" placeholder="optional title"><button id="gen" disabled>Generate link</button><p id="status"></p><div id="preview"></div><div id="linkbox" hidden><input id="url" readonly><button id="copy">Copy</button></div></section><section><h2>Viewer</h2><div id="viewer">Open a generated link to view its waveform.</div></section></main><script src="script.js"></script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Waveform Share</title>
+<meta name="theme-color" content="#0b0d12">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>〰️</text></svg>">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main class="app">
+  <header>
+    <h1>Waveform<span>Share</span></h1>
+    <p class="sub" id="subtitle">Audio waveform encoded entirely in the URL.</p>
+  </header>
+
+  <section class="card" id="viewer" hidden>
+    <div class="meta">
+      <span id="metaTitle">Shared waveform</span>
+      <span id="metaInfo"></span>
+    </div>
+    <div class="wave-wrap" id="waveWrap" aria-label="Audio waveform" role="img">
+      <div id="waveHost"></div>
+      <div class="playhead" id="playhead"></div>
+    </div>
+    <div class="controls">
+      <button id="playBtn" class="btn primary" disabled aria-label="Play">
+        <svg viewBox="0 0 24 24" width="20" height="20" id="playIcon"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
+      </button>
+      <div class="time"><span id="cur">0:00</span> / <span id="tot">0:00</span></div>
+      <label class="btn ghost" for="audioLocal" id="loadAudioLbl">Load audio to play</label>
+      <input type="file" id="audioLocal" accept="audio/*,video/mp4" hidden>
+    </div>
+    <p class="hint" id="playHint">Playback only works if you load the original audio file from your own device. It is never uploaded.</p>
+  </section>
+
+  <section class="card" id="empty">
+    <p>No waveform in this URL yet. Create one below.</p>
+  </section>
+
+  <section class="card" id="generator">
+    <h2>Create a shareable waveform</h2>
+    <label class="drop" id="drop" for="audioGen">
+      <input type="file" id="audioGen" accept="audio/*,video/mp4" hidden>
+      <strong>Choose or drop an audio file</strong>
+      <small>Decoded in your browser. Nothing leaves your device.</small>
+    </label>
+    <div class="grid">
+      <label>Bars <output id="barsOut">480</output>
+        <input type="range" id="bars" min="60" max="960" step="20" value="480"></label>
+      <label>Bits per bar
+        <select id="bits"><option>3</option><option>4</option><option selected>5</option><option>6</option></select></label>
+      <label>Title <input type="text" id="title" maxlength="40" placeholder="optional" ></label>
+    </div>
+    <div id="result" hidden>
+      <div class="stats" id="stats"></div>
+      <div class="warn" id="warn" hidden></div>
+      <textarea id="urlBox" readonly rows="4" spellcheck="false"></textarea>
+      <div class="row">
+        <button class="btn primary" id="copyBtn">Copy link</button>
+        <button class="btn ghost" id="svgBtn">Download SVG</button>
+      </div>
+      <p class="hint">The link uses this page's address. After deploying, open your GitHub Pages site and generate again (or swap the base URL) to get the final shareable link.</p>
+    </div>
+  </section>
+</main>
+<script src="script.js"></script>
+</body>
+</html>
