@@ -247,7 +247,7 @@ function regenerate() {
   const url = `${location.href.split('#')[0]}#${frag}`;
 
   $('result').hidden = false;
-  $('urlBox').value = url;
+  $('urlBox').value = '/#' + frag;
   $('stats').textContent = `${frag.length} characters in the fragment · ${n} bars · ${bits} bits/bar`;
   const warn = $('warn');
   if (url.length > URL_WARN_LEN) {
