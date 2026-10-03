@@ -123,9 +123,8 @@ let audioEl = null;
 let rafId = 0;
 
 /* ---------- Location helpers ----------
-   On GitHub Pages the data lives in the path: https://USER.github.io/REPO/<data>
-   (served via 404.html, which is a copy of index.html). A #hash is still accepted
-   and is used when running locally (file:// or localhost). */
+   Shared data is stored in the URL hash so GitHub Pages never needs to route the
+   encoded data through a 404 page. Hash URLs also work locally and on project pages. */
 const onPages = /\.github\.io$/.test(location.hostname);
 function repoRoot() {
   if (!onPages) return location.origin + location.pathname.replace(/[^/]*$/, '');
@@ -245,7 +244,7 @@ function regenerate() {
   const { q, duration } = analyze(decodedBuffer, n, bits);
   const title = $('title').value.trim();
   const frag = b64uEncode(pack(q, bits, duration)) + (title ? '~' + encodeURIComponent(title) : '');
-  const url = onPages ? repoRoot() + frag : `${location.href.split('#')[0]}#${frag}`;
+  const url = `${location.href.split('#')[0]}#${frag}`;
 
   $('result').hidden = false;
   $('urlBox').value = url;
@@ -257,7 +256,7 @@ function regenerate() {
   } else warn.hidden = true;
 
   showWaveform({ q, bits, duration, title });
-  history.replaceState(null, '', onPages ? repoRoot() + frag : '#' + frag);
+  history.replaceState(null, '', '#' + frag);
   if (audioEl) { /* keep audio attached to the new preview */ setProgress(0); }
 }
 
