@@ -256,7 +256,6 @@ function regenerate() {
   } else warn.hidden = true;
 
   showWaveform({ q, bits, duration, title });
-  history.replaceState(null, '', '#' + frag);
   if (audioEl) { /* keep audio attached to the new preview */ setProgress(0); }
 }
 
