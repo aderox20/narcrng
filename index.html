@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Waveform Share</title>
+<title>Waveform Tool</title>
 <meta name="theme-color" content="#0b0d12">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>〰️</text></svg>">
 <link rel="stylesheet" href="style.css">
@@ -12,7 +12,7 @@
 <main class="app">
   <header>
     <h1>Waveform<span>Share</span></h1>
-    <p class="sub" id="subtitle">Audio waveform encoded entirely in the URL.</p>
+    <p class="sub" id="subtitle">Create and inspect compact audio waveforms.</p>
   </header>
 
   <section class="card" id="viewer" hidden>
@@ -36,14 +36,14 @@
   </section>
 
   <section class="card" id="empty">
-    <p>No waveform in this URL yet. Create one below.</p>
+    <p>No waveform loaded.</p>
   </section>
 
   <section class="card" id="generator">
-    <h2>Create a shareable waveform</h2>
+    <h2>Create a waveform</h2>
     <label class="drop" id="drop" for="audioGen">
       <input type="file" id="audioGen" accept="audio/*,video/mp4" hidden>
-      <strong>Choose or drop an audio file</strong>
+      <strong>Choose an audio file</strong>
       <small>Decoded in your browser. Nothing leaves your device.</small>
     </label>
     <div class="grid">
@@ -61,7 +61,7 @@
         <button class="btn primary" id="copyBtn">Copy link</button>
         <button class="btn ghost" id="svgBtn">Download SVG</button>
       </div>
-      <p class="hint">The link uses this page's address. After deploying, open your GitHub Pages site and generate again (or swap the base URL) to get the final shareable link.</p>
+      <p class="hint">The generated reference can be copied when you are ready.</p>
     </div>
   </section>
 </main>
