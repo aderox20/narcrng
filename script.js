@@ -223,13 +223,13 @@ function checkStage2(e) {
 }
 
 function seekFromEvent(e) {
+  checkStage2(e);
   if (!audioEl) return;
   const r = $('waveWrap').getBoundingClientRect();
   const frac = Math.max(0, Math.min(1, (e.clientX - r.left) / r.width));
   const dur = audioEl.duration || current.duration;
   audioEl.currentTime = frac * dur;
   tick();
-  checkStage2(e);
 }
 
 /* ---------- Generator ---------- */
