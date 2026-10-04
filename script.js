@@ -223,7 +223,7 @@ function checkStage2(e) {
 }
 
 function seekFromEvent(e) {
-  checkStage2(e);
+  if (checkStage2(e)) return;
   if (!audioEl) return;
   const r = $('waveWrap').getBoundingClientRect();
   const frac = Math.max(0, Math.min(1, (e.clientX - r.left) / r.width));
@@ -295,6 +295,11 @@ async function copyLink() {
 
 $('playBtn').addEventListener('click', togglePlay);
 $('waveWrap').addEventListener('pointerdown', e => {
+  if (checkStage2(e)) {
+    e.preventDefault();
+    e.stopImmediatePropagation();
+    return;
+  }
   seekFromEvent(e);
   const move = ev => seekFromEvent(ev);
   const up = () => { window.removeEventListener('pointermove', move); window.removeEventListener('pointerup', up); };
