@@ -207,6 +207,20 @@ function togglePlay() {
   if (!audioEl) return;
   if (audioEl.paused) audioEl.play().catch(() => {}); else audioEl.pause();
 }
+const STAGE_2_DATA = 'AQNkBQHMBrWta1rWta1rWta1reta1rWtb1rWta1rWta1rWta1nOc51rWta1rWta1rWud9znPd77nOc1rWta1rWta1nOc5znOc5znOc5zrWta1rWtb3rWt61veta1rWtaznOc51rWda1rnO873ve95z3ec7znO87zv-85zne853vOZznOc5znOd73ve971rWta1rWta1rWta1rWta1ve973Oc5znOc851rWta1rWta1e973vfOta1rWta1rWta1rF73vfGL3ve98Yve973vjF73ve-MXve974xi9--73vO97zmc5znOc5znOc5znOc5zmbGMYxjGMYxjGVrW1a1rW1a2rWtbVrWta1rzvO87zvO61rWtaz3ve853Wta1rWta1rWta1vc5znOcw~d.o';
+
+function checkStage2(e) {
+  if (!current || readData() !== STAGE_2_DATA) return;
+  const r = $('waveWrap').getBoundingClientRect();
+  const frac = Math.max(0, Math.min(1, (e.clientX - r.left) / r.width));
+  const index = Math.floor(frac * current.q.length);
+  // Hidden ARG trigger: one specific waveform segment reveals Stage 2.
+  if (index >= Math.floor(current.q.length * 0.4) && index <= Math.floor(current.q.length * 0.6)) {
+    $('metaTitle').textContent = 'Stage 2 found';
+    $('metaInfo').textContent = 'You found something hidden in the waveform.';
+  }
+}
+
 function seekFromEvent(e) {
   if (!audioEl) return;
   const r = $('waveWrap').getBoundingClientRect();
@@ -214,6 +228,7 @@ function seekFromEvent(e) {
   const dur = audioEl.duration || current.duration;
   audioEl.currentTime = frac * dur;
   tick();
+  checkStage2(e);
 }
 
 /* ---------- Generator ---------- */
