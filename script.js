@@ -215,8 +215,8 @@ function checkStage2(e) {
   const frac = Math.max(0, Math.min(1, (e.clientX - r.left) / r.width));
   const index = Math.floor(frac * current.q.length);
   // Hidden ARG trigger: one specific waveform segment reveals Stage 2.
-  if (index >= Math.floor(current.q.length * 0.4) && index <= Math.floor(current.q.length * 0.6)) {
-    $('metaTitle').textContent = 'Stage 2 found';
+  if (index >= 0 && index < current.q.length) {
+    $('metaTitle').textContent = 'STAGE 2 FOUND — TEST';
     $('metaInfo').textContent = 'You found something hidden in the waveform.';
   }
 }
